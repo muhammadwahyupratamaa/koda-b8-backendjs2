@@ -1,4 +1,4 @@
-import { FaRegBell, FaSearch, FaUserCircle } from "react-icons/fa";
+import { FaSearch, FaUserCircle } from "react-icons/fa";
 
 function Navbar() {
   return (
@@ -17,10 +17,6 @@ function Navbar() {
             className="bg-transparent outline-none"
           />
         </div>
-
-        <button className="rounded-full bg-gray-100 p-3 hover:bg-gray-200">
-          <FaRegBell />
-        </button>
 
         <button className="rounded-full bg-blue-600 p-2 text-white">
           <FaUserCircle size={26} />
