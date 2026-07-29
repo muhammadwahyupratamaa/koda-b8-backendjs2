@@ -1,13 +1,13 @@
 import bcrypt from "bcrypt";
 import * as users from "../models/users.model.js";
 import { constants } from "node:http2";
-
+import jwt from "jsonwebtoken";
 
 /**
- * 
- * @param {import("express").Request} req 
- * @param {import("express").Response} res 
- * @returns 
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns
  */
 export async function register(req, res) {
   try {
@@ -49,12 +49,11 @@ export async function register(req, res) {
   }
 }
 
-
 /**
- * 
- * @param {import("express").Request} req 
- * @param {import("express").Response} res 
- * @returns 
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns
  */
 export async function login(req, res) {
   try {
@@ -81,12 +80,22 @@ export async function login(req, res) {
         message: "Invalid password",
       });
     }
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      process.env.JWT_KEY,
+      {
+        expiresIn: "1d",
+      },
+    );
 
     const { password: _, ...userData } = user;
 
     return res.status(constants.HTTP_STATUS_OK).json({
       message: "Login success",
-      data: userData,
+      token,
     });
   } catch (error) {
     console.error(error);

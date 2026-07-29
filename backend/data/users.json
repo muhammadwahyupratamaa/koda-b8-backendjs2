@@ -14,5 +14,13 @@
     "password": "$2b$10$jx.GR9IztGQwQCbeurtorOwcc.8Bjw5CzZoiFSo7EMIXcjjM8svAW",
     "created_at": "2026-07-29T03:50:06.668Z",
     "updated_at": "2026-07-29T03:50:06.668Z"
+  },
+  {
+    "id": 3,
+    "name": "makruf",
+    "email": "makruf@mail.com",
+    "password": "$2b$10$.9Kt7xY3w56VngDtExjCWeiinIk.T5Iv70SvqSLeP1s7pvkXHwlWy",
+    "created_at": "2026-07-29T07:08:58.998Z",
+    "updated_at": "2026-07-29T07:08:58.998Z"
   }
 ]

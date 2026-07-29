@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { authMiddleware } from "../middlewares/auth.js";
 import {
   create,
   findAllNotes,
@@ -8,6 +9,7 @@ import {
 } from "../controllers/notes.controller.js";
 
 const router = Router();
+router.use(authMiddleware);
 
 router.post("/", create);
 router.get("/", findAllNotes);
