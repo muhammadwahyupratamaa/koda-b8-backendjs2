@@ -23,3 +23,9 @@ Content-Type: application/x-www-form-urlencoded
 
 title=Belajar Backend&content=Belajar Express
 
+### Update Note
+PUT /notes/1
+Host: localhost:8080
+Content-Type: application/x-www-form-urlencoded
+
+title=Belajar Express JS&content=Middleware dan Router
