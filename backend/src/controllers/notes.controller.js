@@ -36,10 +36,10 @@ export async function create(req, res) {
 }
 
 /**
- * 
- * @param {import("express").Request} req 
- * @param {import("express").Response} res 
- * @returns 
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns
  */
 export async function findAllNotes(req, res) {
   try {
@@ -59,10 +59,10 @@ export async function findAllNotes(req, res) {
 }
 
 /**
- * 
- * @param {import("express").Request} req 
- * @param {import("express").Response} res 
- * @returns 
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns
  */
 export async function findNoteById(req, res) {
   try {
@@ -89,10 +89,10 @@ export async function findNoteById(req, res) {
 }
 
 /**
- * 
- * @param {import("express").Request} req 
- * @param {import("express").Response} res 
- * @returns 
+ *
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns
  */
 export async function updateNote(req, res) {
   try {
@@ -114,6 +114,36 @@ export async function updateNote(req, res) {
     return res.status(constants.HTTP_STATUS_OK).json({
       message: "Note updated successfully",
       data: note,
+    });
+  } catch (error) {
+    console.log(error);
+
+    return res.status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json({
+      message: "Internal server error",
+    });
+  }
+}
+
+/**
+ *
+ * @param {import ("express").Request} req
+ * @param {import ("express").Response} res
+ * @returns
+ */
+export async function removeNote(req, res) {
+  try {
+    const id = parseInt(req.params.id);
+
+    const deleted = await notes.remove(id);
+
+    if (!deleted) {
+      return res.status(constants.HTTP_STATUS_NOT_FOUND).json({
+        message: "Note not found",
+      });
+    }
+
+    return res.status(constants.HTTP_STATUS_OK).json({
+      message: "Note deleted successfully",
     });
   } catch (error) {
     console.log(error);

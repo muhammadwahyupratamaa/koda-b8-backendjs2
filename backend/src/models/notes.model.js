@@ -76,7 +76,7 @@ export async function remove(id) {
     return false;
   }
 
-  await writeNotes(FILE_NAME, filteredNotes);
+  await writeNotes( filteredNotes);
 
   return true;
 }
