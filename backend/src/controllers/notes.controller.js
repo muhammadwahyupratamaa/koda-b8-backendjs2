@@ -20,6 +20,7 @@ export async function create(req, res) {
     const newNote = await notes.create({
       title,
       content,
+      user_id: req.user.id,
     });
 
     return res.status(constants.HTTP_STATUS_CREATED).json({

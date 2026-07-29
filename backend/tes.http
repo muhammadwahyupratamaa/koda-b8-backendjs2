@@ -22,7 +22,7 @@ Host: localhost:8080
 Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJtYWtydWZAbWFpbC5jb20iLCJpYXQiOjE3ODUzMDk2NTMsImV4cCI6MTc4NTM5NjA1M30._pt62X-j0t3Y48VkQK5RkXBN1OJmbbi9MYUssUufwjM
 
-title=Node.js Backend&content=Belajar Express
+title=golang Backend&content=Belajar goroutine
 
 ### Update Note
 PUT /notes/1
