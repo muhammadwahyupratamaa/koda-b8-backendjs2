@@ -22,6 +22,12 @@ export async function findAll() {
   return await readNotes();
 }
 
+export async function findAllByUserId(userId) {
+  const notes = await readNotes();
+
+  return notes.filter((note) => note.user_id === userId);
+}
+
 export async function findById(id) {
   const notes = await readNotes();
 
@@ -76,7 +82,7 @@ export async function remove(id) {
     return false;
   }
 
-  await writeNotes( filteredNotes);
+  await writeNotes(filteredNotes);
 
   return true;
 }

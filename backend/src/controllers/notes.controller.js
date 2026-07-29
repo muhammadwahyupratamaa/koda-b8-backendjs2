@@ -44,7 +44,7 @@ export async function create(req, res) {
  */
 export async function findAllNotes(req, res) {
   try {
-    const data = await notes.findAll();
+    const data = await notes.findAllByUserId(req.user.id);
 
     return res.status(constants.HTTP_STATUS_OK).json({
       message: "success",
@@ -98,13 +98,9 @@ export async function findNoteById(req, res) {
 export async function updateNote(req, res) {
   try {
     const id = parseInt(req.params.id);
-
     const { title, content } = req.body;
 
-    const note = await notes.update(id, {
-      title,
-      content,
-    });
+    const note = await notes.findById(id);
 
     if (!note) {
       return res.status(constants.HTTP_STATUS_NOT_FOUND).json({
@@ -112,12 +108,23 @@ export async function updateNote(req, res) {
       });
     }
 
+    if (note.user_id !== req.user.id) {
+      return res.status(constants.HTTP_STATUS_FORBIDDEN).json({
+        message: "Forbidden",
+      });
+    }
+
+    const updatedNote = await notes.update(id, {
+      title,
+      content,
+    });
+
     return res.status(constants.HTTP_STATUS_OK).json({
       message: "Note updated successfully",
-      data: note,
+      data: updatedNote,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     return res.status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json({
       message: "Internal server error",
@@ -134,8 +141,18 @@ export async function updateNote(req, res) {
 export async function removeNote(req, res) {
   try {
     const id = parseInt(req.params.id);
-
     const deleted = await notes.remove(id);
+    if (!note) {
+      return res.status(constants.HTTP_STATUS_NOT_FOUND).json({
+        message: "Note not found",
+      });
+    }
+
+    if (note.user_id !== req.user.id) {
+      return res.status(constants.HTTP_STATUS_FORBIDDEN).json({
+        message: "Forbidden",
+      });
+    }
 
     if (!deleted) {
       return res.status(constants.HTTP_STATUS_NOT_FOUND).json({
