@@ -1,7 +1,26 @@
-import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-function App() {
-  return <div className="text-xl text-blue-700">hai</div>;
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+]);
+
+export default function App() {
+  return <RouterProvider router={router} />;
 }
-
-export default App;
