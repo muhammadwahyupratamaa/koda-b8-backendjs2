@@ -18,11 +18,10 @@ function getNextId(users) {
   return users[users.length - 1].id + 1;
 }
 
-
 export async function findAll() {
   return await readUsers();
 }
- 
+
 export async function findByEmail(email) {
   const users = await readUsers();
 
