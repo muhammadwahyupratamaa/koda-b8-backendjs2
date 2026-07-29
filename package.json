@@ -1,0 +1,31 @@
+{
+  "name": "stickynote",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "backend": "npm run dev -w backend",
+    "frontend": "npm run dev -w frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muhammadwahyupratamaa/koda-b8-backendjs2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/muhammadwahyupratamaa/koda-b8-backendjs2/issues"
+  },
+  "homepage": "https://github.com/muhammadwahyupratamaa/koda-b8-backendjs2#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.4"
+  }
+}
