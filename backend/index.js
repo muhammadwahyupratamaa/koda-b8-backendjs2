@@ -1,16 +1,16 @@
 import express from "express";
-import router from "./src/routes/index.js";
 import corsMiddleware from "./src/middlewares/cors.js";
+import authRouter from "./src/routes/auth.router.js";
 
 const app = express();
 
-app.use(express.json());
+app.use(express.urlencoded());
 app.use(corsMiddleware);
 
-app.use(router);
+app.use("/auth", authRouter);
 
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server is running on ${PORT}`);
 });

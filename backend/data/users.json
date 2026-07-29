@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Wahyu",
+    "email": "wahyu@mail.com",
+    "password": "$2b$10$RE7/fqyd09MIyCw8TKkP/.DqlZa8SicvsfwKO48Q8ik2OI7AM4Qoy",
+    "created_at": "2026-07-29T03:47:32.247Z",
+    "updated_at": "2026-07-29T03:47:32.247Z"
+  },
+  {
+    "id": 2,
+    "name": "jar",
+    "email": "jar@mail.com",
+    "password": "$2b$10$jx.GR9IztGQwQCbeurtorOwcc.8Bjw5CzZoiFSo7EMIXcjjM8svAW",
+    "created_at": "2026-07-29T03:50:06.668Z",
+    "updated_at": "2026-07-29T03:50:06.668Z"
+  }
+]

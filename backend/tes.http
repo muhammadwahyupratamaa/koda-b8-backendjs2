@@ -1,2 +1,9 @@
 ###
 GET http://localhost:8080/
+
+### Register
+POST /auth/register
+Host: localhost:8080
+Content-Type: application/x-www-form-urlencoded
+
+name=jar&email=jar@mail.com&password=123456
