@@ -2,25 +2,11 @@ import Navbar from "../components/Navbar";
 import NoteCard from "../components/NoteCard";
 import NoteForm from "../components/NoteForm";
 import Sidebar from "../components/SideBar";
+import { useEffect, useState } from "react";
+import { getNotes } from "../services/notes";
 
 function Home() {
-  const notes = [
-    {
-      id: 1,
-      title: "Belajar React",
-      content: "Hari ini belajar useState dan useEffect.",
-    },
-    {
-      id: 2,
-      title: "Belajar JWT",
-      content: "JWT terdiri dari Header, Payload, dan Signature.",
-    },
-    {
-      id: 3,
-      title: "Express",
-      content: "Middleware dijalankan sebelum controller.",
-    },
-  ];
+  const [notes, setNotes] = useState([]);
 
   const colors = [
     "bg-yellow-100",
@@ -29,6 +15,16 @@ function Home() {
     "bg-pink-100",
     "bg-orange-100",
   ];
+
+  useEffect(() => {
+    async function loadNotes() {
+      const data = await getNotes();
+
+      setNotes(data.data);
+    }
+
+    loadNotes();
+  }, []);
   return (
     <main className="flex h-screen bg-gray-100">
       <Sidebar />
