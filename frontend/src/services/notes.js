@@ -29,3 +29,21 @@ export async function createNote(title, content) {
 
   return await response.json();
 }
+
+export async function updateNote(id, title, content) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${BASE_URL}/notes/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      title,
+      content,
+    }),
+  });
+
+  return await response.json();
+}
