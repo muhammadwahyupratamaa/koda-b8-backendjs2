@@ -1,12 +1,14 @@
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import NoteCard from "../components/NoteCard";
 import NoteForm from "../components/NoteForm";
+import NoteModal from "../components/NoteModal";
 import Sidebar from "../components/SideBar";
-import { useEffect, useState } from "react";
 import { getNotes } from "../services/notes";
 
 function Home() {
   const [notes, setNotes] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const colors = [
     "bg-yellow-100",
@@ -16,23 +18,39 @@ function Home() {
     "bg-orange-100",
   ];
 
+  async function loadNotes() {
+    const data = await getNotes();
+    setNotes(data.data);
+  }
+
   useEffect(() => {
-    async function loadNotes() {
-      const data = await getNotes();
-
-      setNotes(data.data);
-    }
-
     loadNotes();
   }, []);
+
   return (
     <main className="flex h-screen bg-gray-100">
       <Sidebar />
 
-      <section className="flex-1 p-8 overflow-y-auto">
+      <section className="flex-1 overflow-y-auto p-8">
         <Navbar />
 
-        <NoteForm />
+        <div className="mt-6 flex justify-end">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="rounded-xl bg-blue-600 px-5 py-3 font-medium text-white hover:bg-blue-700"
+          >
+            + Add Note
+          </button>
+        </div>
+
+        <NoteModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <NoteForm
+            onSuccess={() => {
+              loadNotes();
+              setIsModalOpen(false);
+            }}
+          />
+        </NoteModal>
 
         <div className="mt-8">
           <h2 className="mb-5 text-2xl font-bold">My Notes</h2>

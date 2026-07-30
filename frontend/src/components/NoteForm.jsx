@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createNote } from "../services/notes";
 
-function NoteForm() {
+function NoteForm({ onSuccess }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -9,8 +9,10 @@ function NoteForm() {
     e.preventDefault();
 
     await createNote(title, content);
+    setTitle("");
+    setContent("");
 
-    console.log("Success");
+    onSuccess();
   };
 
   return (
