@@ -11,3 +11,21 @@ export async function getNotes() {
 
   return await response.json();
 }
+
+export async function createNote(title, content) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${BASE_URL}/notes`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      title,
+      content,
+    }),
+  });
+
+  return await response.json();
+}
