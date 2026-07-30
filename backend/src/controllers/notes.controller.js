@@ -124,7 +124,7 @@ export async function updateNote(req, res) {
       data: updatedNote,
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
 
     return res.status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json({
       message: "Internal server error",
@@ -141,7 +141,8 @@ export async function updateNote(req, res) {
 export async function removeNote(req, res) {
   try {
     const id = parseInt(req.params.id);
-    const deleted = await notes.remove(id);
+    const note = await notes.findById(id);
+
     if (!note) {
       return res.status(constants.HTTP_STATUS_NOT_FOUND).json({
         message: "Note not found",
@@ -154,11 +155,7 @@ export async function removeNote(req, res) {
       });
     }
 
-    if (!deleted) {
-      return res.status(constants.HTTP_STATUS_NOT_FOUND).json({
-        message: "Note not found",
-      });
-    }
+    await notes.remove(id);
 
     return res.status(constants.HTTP_STATUS_OK).json({
       message: "Note deleted successfully",
