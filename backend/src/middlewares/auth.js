@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
-import {constants} from "node:http2"
+import { constants } from "node:http2";
+import { verify } from "../lib/jwt.js";
 
 export function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -19,7 +19,7 @@ export function authMiddleware(req, res, next) {
   }
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_KEY);
+    const payload = verify(token);
 
     req.user = payload;
 
