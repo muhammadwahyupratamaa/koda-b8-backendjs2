@@ -9,6 +9,7 @@ import { getNotes } from "../services/notes";
 function Home() {
   const [notes, setNotes] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNote, setSelectedNote] = useState(null);
 
   const colors = [
     "bg-yellow-100",
@@ -36,7 +37,10 @@ function Home() {
 
         <div className="mt-6 flex justify-end">
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              setSelectedNote(null);
+              setIsModalOpen(true);
+            }}
             className="rounded-xl bg-blue-600 px-5 py-3 font-medium text-white hover:bg-blue-700"
           >
             + Add Note
@@ -45,6 +49,7 @@ function Home() {
 
         <NoteModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <NoteForm
+            selectedNote={selectedNote}
             onSuccess={() => {
               loadNotes();
               setIsModalOpen(false);
@@ -61,6 +66,10 @@ function Home() {
                 key={note.id}
                 note={note}
                 color={colors[index % colors.length]}
+                onClick={() => {
+                  setSelectedNote(note);
+                  setIsModalOpen(true);
+                }}
               />
             ))}
           </div>

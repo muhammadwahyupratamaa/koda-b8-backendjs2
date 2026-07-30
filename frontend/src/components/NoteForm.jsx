@@ -1,14 +1,29 @@
-import { useState } from "react";
-import { createNote } from "../services/notes";
+import { useEffect, useState } from "react";
+import { createNote, updateNote } from "../services/notes";
 
-function NoteForm({ onSuccess }) {
+function NoteForm({ selectedNote, onSuccess }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (selectedNote) {
+      setTitle(selectedNote.title);
+      setContent(selectedNote.content);
+    } else {
+      setTitle("");
+      setContent("");
+    }
+  }, [selectedNote]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await createNote(title, content);
+    if (selectedNote) {
+      await updateNote(selectedNote.id, title, content);
+    } else {
+      await createNote(title, content);
+    }
+
     setTitle("");
     setContent("");
 
@@ -17,7 +32,9 @@ function NoteForm({ onSuccess }) {
 
   return (
     <section className="mt-6 rounded-2xl bg-white p-6 shadow-sm">
-      <h2 className="mb-6 text-xl font-semibold text-gray-800">Add New Note</h2>
+      <h2 className="mb-6 text-xl font-semibold text-gray-800">
+        {selectedNote ? "Edit Note" : "Add New Note"}
+      </h2>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="flex flex-col gap-2">
@@ -55,7 +72,7 @@ function NoteForm({ onSuccess }) {
             type="submit"
             className="rounded-xl bg-blue-600 px-6 py-3 font-medium text-white hover:bg-blue-700"
           >
-            Add Note
+            {selectedNote ? "Update Note" : "Add Note"}
           </button>
         </div>
       </form>
