@@ -61,7 +61,7 @@ router.post("/register", register);
  *       200:
  *         description: Login successful
  *         content:
- *           application/x-www/form-urlencoded:
+ *           application/x-www-form-urlencoded:
  *             schema:
  *               type: object
  *               properties:
