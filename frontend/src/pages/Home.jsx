@@ -4,12 +4,14 @@ import NoteCard from "../components/NoteCard";
 import NoteForm from "../components/NoteForm";
 import NoteModal from "../components/NoteModal";
 import Sidebar from "../components/SideBar";
-import { getNotes } from "../services/notes";
+import { deleteNote, getNotes } from "../services/notes";
+import DeleteModal from "../components/DeleteModal";
 
 function Home() {
   const [notes, setNotes] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNote, setSelectedNote] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const colors = [
     "bg-yellow-100",
@@ -28,8 +30,16 @@ function Home() {
     loadNotes();
   }, []);
 
+  async function handleDelete() {
+    await deleteNote(selectedNote.id);
+
+    await loadNotes();
+
+    setIsDeleteModalOpen(false);
+    setSelectedNote(null);
+  }
   return (
-    <main className="flex h-screen bg-gray-100">
+    <main className="flex h-screen bg-gray-600">
       <Sidebar />
 
       <section className="flex-1 overflow-y-auto p-8">
@@ -56,6 +66,14 @@ function Home() {
             }}
           />
         </NoteModal>
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          onClose={() => {
+            setIsDeleteModalOpen(false);
+            setSelectedNote(null);
+          }}
+          onDelete={handleDelete}
+        />
 
         <div className="mt-8">
           <h2 className="mb-5 text-2xl font-bold">My Notes</h2>
@@ -66,9 +84,13 @@ function Home() {
                 key={note.id}
                 note={note}
                 color={colors[index % colors.length]}
-                onClick={() => {
+                onEdit={() => {
                   setSelectedNote(note);
                   setIsModalOpen(true);
+                }}
+                onDelete={() => {
+                  setSelectedNote(note);
+                  setIsDeleteModalOpen(true);
                 }}
               />
             ))}

@@ -1,6 +1,6 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-function NoteCard({ note, color, onClick }) {
+function NoteCard({ note, color, onEdit, onDelete }) {
   return (
     <div
       className={`${color} flex min-h-56 flex-col justify-between rounded-2xl p-5 shadow-sm transition hover:shadow-md`}
@@ -13,14 +13,18 @@ function NoteCard({ note, color, onClick }) {
 
       <div className="mt-6 flex justify-end gap-3">
         <button
-          onClick={onClick}
+          onClick={onEdit}
           className="flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm shadow hover:bg-gray-100"
         >
           <FaEdit />
           Edit
         </button>
 
-        <button className="flex items-center gap-2 rounded-lg bg-red-500 px-3 py-2 text-sm text-white hover:bg-red-600">
+        <button
+          type="button"
+          onClick={onDelete}
+          className="flex items-center gap-2 rounded-lg bg-red-500 px-3 py-2 text-sm text-white hover:bg-red-600"
+        >
           <FaTrash />
           Delete
         </button>
