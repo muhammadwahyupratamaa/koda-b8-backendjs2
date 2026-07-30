@@ -1,16 +1,16 @@
 import { useState } from "react";
+import { createNote } from "../services/notes";
 
 function NoteForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log({
-      title,
-      content,
-    });
+    await createNote(title, content);
+
+    console.log("Success");
   };
 
   return (
