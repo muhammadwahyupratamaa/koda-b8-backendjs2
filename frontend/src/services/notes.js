@@ -47,3 +47,22 @@ export async function updateNote(id, title, content) {
 
   return await response.json();
 }
+
+export async function deleteNote(id) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${BASE_URL}/notes/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  console.log(response.status);
+
+  const data = await response.json();
+
+  console.log(data);
+
+  return data;
+}
