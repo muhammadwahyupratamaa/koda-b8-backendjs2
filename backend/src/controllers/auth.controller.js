@@ -90,6 +90,7 @@ export async function login(req, res) {
     return res.status(constants.HTTP_STATUS_OK).json({
       message: "Login success",
       token,
+      user: userData,
     });
   } catch (error) {
     console.error(error);

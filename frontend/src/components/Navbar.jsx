@@ -1,25 +1,21 @@
-import { FaSearch, FaUserCircle } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 
 function Navbar() {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   return (
     <header className="flex items-center justify-between rounded-2xl bg-white p-5 shadow-sm">
       <div>
         <h1 className="text-2xl font-bold text-gray-800">My Notes</h1>
       </div>
 
-      <div className="flex items-center gap-5">
-        <div className="flex items-center gap-3 rounded-xl border bg-gray-50 px-4 py-2">
-          <FaSearch className="text-gray-400" />
-
-          <input
-            type="text"
-            placeholder="Search notes..."
-            className="bg-transparent outline-none"
-          />
+      <div className="flex items-center gap-3">
+        <div className="text-right">
+          <p className="font-semibold text-gray-800">{user?.name || "Guest"}</p>
         </div>
 
         <button className="rounded-full bg-blue-600 p-2 text-white">
-          <FaUserCircle size={26} />
+          <FaUserCircle size={28} />
         </button>
       </div>
     </header>
