@@ -1,18 +1,29 @@
 import { useState } from "react";
+import { register } from "../services/auth";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log({
-      name,
-      email,
-      password,
-    });
+    if (!name || !email || !password) {
+      alert("All fields are required.");
+      return;
+    }
+
+    setLoading(true);
+
+    await register(name, email, password);
+
+    setLoading(false);
+
+    navigate("/login");
   };
 
   return (
@@ -66,11 +77,22 @@ function Register() {
 
           <button
             type="submit"
-            className="cursor-pointer rounded-lg bg-blue-600 p-2 font-semibold text-white hover:bg-blue-700"
+            disabled={loading}
+            className="rounded-lg bg-blue-600 p-2 font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
+
+        <p className="mt-5 text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="font-semibold text-blue-600 hover:underline"
+          >
+            Login
+          </Link>
+        </p>
       </section>
     </main>
   );

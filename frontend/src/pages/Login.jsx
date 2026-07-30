@@ -11,12 +11,13 @@ function Login() {
     e.preventDefault();
 
     const data = await login(email, password);
+
     if (data.token) {
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-      navigate("/")
+      navigate("/");
     }
-    
   };
 
   return (
