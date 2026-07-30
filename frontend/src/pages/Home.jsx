@@ -6,6 +6,7 @@ import NoteModal from "../components/NoteModal";
 import Sidebar from "../components/SideBar";
 import { deleteNote, getNotes } from "../services/notes";
 import DeleteModal from "../components/DeleteModal";
+import { FaRegStickyNote } from "react-icons/fa";
 
 function Home() {
   const [notes, setNotes] = useState([]);
@@ -78,23 +79,35 @@ function Home() {
         <div className="mt-8">
           <h2 className="mb-5 text-2xl font-bold">My Notes</h2>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {notes.map((note, index) => (
-              <NoteCard
-                key={note.id}
-                note={note}
-                color={colors[index % colors.length]}
-                onEdit={() => {
-                  setSelectedNote(note);
-                  setIsModalOpen(true);
-                }}
-                onDelete={() => {
-                  setSelectedNote(note);
-                  setIsDeleteModalOpen(true);
-                }}
-              />
-            ))}
-          </div>
+          {notes.length === 0 ? (
+            <div className="mt-20 flex flex-col items-center justify-center">
+              <FaRegStickyNote className="text-7xl text-blue-400" />
+
+              <h3 className="mt-5 text-3xl font-bold">No Notes Yet</h3>
+
+              <p className="mt-2 text-center text-gray-500">
+                Create your first note to get started.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {notes.map((note, index) => (
+                <NoteCard
+                  key={note.id}
+                  note={note}
+                  color={colors[index % colors.length]}
+                  onEdit={() => {
+                    setSelectedNote(note);
+                    setIsModalOpen(true);
+                  }}
+                  onDelete={() => {
+                    setSelectedNote(note);
+                    setIsDeleteModalOpen(true);
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </main>
