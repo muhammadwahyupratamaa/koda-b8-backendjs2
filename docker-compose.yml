@@ -15,6 +15,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+    networks:
+      - internal
+
   backend:
     build:
       context: ./backend
@@ -30,6 +33,9 @@ services:
     depends_on:
       - postgres
 
+    networks:
+      - internal 
+
   frontend:
     build:
       context: ./frontend
@@ -44,6 +50,13 @@ services:
 
     depends_on:
       - backend
+    
+    networks:
+      - internal 
 
 volumes:
   postgres_data:
+
+networks:
+  internal:
+    driver: bridge
