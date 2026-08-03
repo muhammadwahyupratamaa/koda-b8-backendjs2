@@ -7,16 +7,19 @@ services:
     ports:
       - "5432:5432"
 
+    env_file:
+      - .env
+
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1
-      POSTGRES_DB: tulisan_notes
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
     networks:
-      - internal
+      - isolated
 
   backend:
     build:
@@ -34,7 +37,8 @@ services:
       - postgres
 
     networks:
-      - internal 
+      - public
+      - isolated
 
   frontend:
     build:
@@ -52,11 +56,15 @@ services:
       - backend
     
     networks:
-      - internal 
+      - public
 
 volumes:
   postgres_data:
 
 networks:
-  internal:
+  public:
     driver: bridge
+
+  isolated:
+    driver: bridge
+    internal: true
