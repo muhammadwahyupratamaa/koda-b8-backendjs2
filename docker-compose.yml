@@ -1,0 +1,23 @@
+services: 
+  backend:
+    build:
+      context: ./backend
+    container_name: Tulisan-notes-backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app:z
+      - /app/node_modules
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: Tulis-notes-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app:z
+      - /app/node_modules
+
+    depends_on:
+      - backend
