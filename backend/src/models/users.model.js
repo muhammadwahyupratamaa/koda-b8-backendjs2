@@ -1,48 +1,33 @@
-import { readData, writeData } from "../lib/storage.js";
-
-const FILE_NAME = "users.json";
-
-async function readUsers() {
-  return await readData(FILE_NAME);
-}
-
-async function writeUsers(users) {
-  await writeData(FILE_NAME, users);
-}
-
-function getNextId(users) {
-  if (users.length === 0) {
-    return 1;
-  }
-
-  return users[users.length - 1].id + 1;
-}
+import pool from "../lib/db.js";
 
 export async function findAll() {
-  return await readUsers();
+  const result = await pool.query(`SELECT * FROM users ORDER BY id ASC`);
+  return result.rows;
 }
 
 export async function findByEmail(email) {
-  const users = await readUsers();
+  const result = await pool.query(
+    `
+    SELECT *
+    FROM users
+    WHERE email = $1
+    LIMIT 1
+    `,
+    [email],
+  );
 
-  return users.find((user) => user.email === email);
+  return result.rows[0];
 }
 
 export async function create(data) {
-  const users = await readUsers();
+  const result = await pool.query(
+    `
+    INSERT INTO users (name, email, password)
+    VALUES ($1, $2, $3)
+    RETURNING *;
+    `,
+    [data.name, data.email, data.password],
+  );
 
-  const now = new Date().toISOString();
-
-  const newUser = {
-    id: getNextId(users),
-    ...data,
-    created_at: now,
-    updated_at: now,
-  };
-
-  users.push(newUser);
-
-  await writeUsers(users);
-
-  return newUser;
+  return result.rows[0];
 }
