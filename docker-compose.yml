@@ -1,23 +1,49 @@
-services: 
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: Tulisan-notes-postgres
+    restart: unless-stopped
+
+    ports:
+      - "5432:5432"
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1
+      POSTGRES_DB: tulisan_notes
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   backend:
     build:
       context: ./backend
     container_name: Tulisan-notes-backend
+
     ports:
       - "8080:8080"
+
     volumes:
-      - ./backend:/app:z
+      - ./backend:/app:Z
       - /app/node_modules
+
+    depends_on:
+      - postgres
 
   frontend:
     build:
       context: ./frontend
-    container_name: Tulis-notes-frontend
+    container_name: Tulisan-notes-frontend
+
     ports:
       - "5173:5173"
+
     volumes:
-      - ./frontend:/app:z
+      - ./frontend:/app:Z
       - /app/node_modules
 
     depends_on:
       - backend
+
+volumes:
+  postgres_data:
