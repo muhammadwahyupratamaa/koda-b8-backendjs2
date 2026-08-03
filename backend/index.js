@@ -2,6 +2,15 @@ import express from "express";
 import corsMiddleware from "./src/middlewares/cors.js";
 import router from "./src/routes/index.js";
 
+import pool from "./src/lib/db.js";
+
+try {
+  await pool.query("SELECT NOW()");
+  console.log("✅ Database connected");
+} catch (error) {
+  console.log(error);
+}
+
 const app = express();
 
 app.use(express.json());
