@@ -25,9 +25,17 @@ export async function findAllByUserId(userId) {
 }
 
 export async function findById(id) {
-  const notes = await readNotes();
+  const result = await pool.query(
+    `
+    SELECT *
+    FROM notes
+    WHERE id = $1
+    LIMIT 1
+    `,
+    [id],
+  );
 
-  return notes.find((note) => note.id === id);
+  return result.rows[0];
 }
 
 export async function create(data) {
