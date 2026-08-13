@@ -76,6 +76,12 @@ export async function findNoteById(req, res) {
       });
     }
 
+    if (note.user_id !== req.user.id) {
+      return res.status(constants.HTTP_STATUS_FORBIDDEN).json({
+        message: "Forbidden",
+      });
+    }
+
     return res.status(constants.HTTP_STATUS_OK).json({
       message: "success",
       data: note,
