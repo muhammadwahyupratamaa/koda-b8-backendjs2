@@ -50,7 +50,7 @@ router.get("/", findAllNotes);
  *     security:
  *      - token: []
  *     responses:
- *       200:
+ *       201:
  *         description: Create Note Success.
  */
 router.post("/", create);
