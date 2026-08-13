@@ -69,15 +69,14 @@ export async function update(id, data) {
 }
 
 export async function remove(id) {
-  const notes = await readNotes();
+  const result = await pool.query(
+    `
+    DELETE FROM notes
+    WHERE id = $1
+    RETURNING *;
+    `,
+    [id],
+  );
 
-  const filteredNotes = notes.filter((note) => note.id !== id);
-
-  if (filteredNotes.length === notes.length) {
-    return false;
-  }
-
-  await writeNotes(filteredNotes);
-
-  return true;
+  return result.rows[0];
 }
