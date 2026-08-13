@@ -52,23 +52,20 @@ export async function create(data) {
 }
 
 export async function update(id, data) {
-  const notes = await readNotes();
+  const result = await pool.query(
+    `
+    UPDATE notes
+    SET
+      title = $1,
+      content = $2,
+      updated_at = NOW()
+    WHERE id = $3
+    RETURNING *;
+    `,
+    [data.title, data.content, id],
+  );
 
-  const index = notes.findIndex((note) => note.id === id);
-
-  if (index === -1) {
-    return null;
-  }
-
-  notes[index] = {
-    ...notes[index],
-    ...data,
-    updated_at: new Date().toISOString(),
-  };
-
-  await writeNotes(notes);
-
-  return notes[index];
+  return result.rows[0];
 }
 
 export async function remove(id) {
