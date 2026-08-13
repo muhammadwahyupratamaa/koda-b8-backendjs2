@@ -39,22 +39,16 @@ export async function findById(id) {
 }
 
 export async function create(data) {
-  const notes = await readNotes();
+  const result = await pool.query(
+    `
+    INSERT INTO notes (title, content, user_id)
+    VALUES ($1, $2, $3)
+    RETURNING *;
+    `,
+    [data.title, data.content, data.user_id],
+  );
 
-  const now = new Date().toISOString();
-
-  const newNote = {
-    id: getNextId(notes),
-    ...data,
-    created_at: now,
-    updated_at: now,
-  };
-
-  notes.push(newNote);
-
-  await writeNotes(notes);
-
-  return newNote;
+  return result.rows[0];
 }
 
 export async function update(id, data) {
