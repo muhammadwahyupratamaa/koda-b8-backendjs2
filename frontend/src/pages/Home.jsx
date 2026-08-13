@@ -24,6 +24,12 @@ function Home() {
 
   async function loadNotes() {
     const data = await getNotes();
+
+    if (!data.data) {
+      setNotes([]);
+      return;
+    }
+
     setNotes(data.data);
   }
 
