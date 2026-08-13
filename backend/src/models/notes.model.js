@@ -1,25 +1,13 @@
-import { readData, writeData } from "../lib/storage.js";
-
-const FILE_NAME = "notes.json";
-
-async function readNotes() {
-  return await readData(FILE_NAME);
-}
-
-async function writeNotes(notes) {
-  await writeData(FILE_NAME, notes);
-}
-
-function getNextId(notes) {
-  if (notes.length === 0) {
-    return 1;
-  }
-
-  return notes[notes.length - 1].id + 1;
-}
+import pool from "../lib/db.js";
 
 export async function findAll() {
-  return await readNotes();
+  const result = await pool.query(`
+    SELECT *
+    FROM notes
+    ORDER BY id ASC
+  `);
+
+  return result.rows;
 }
 
 export async function findAllByUserId(userId) {
